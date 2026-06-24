@@ -99,14 +99,9 @@ export class AuthService {
     };
   }
 
-  async logout(userId: string) {
-    // Best-effort server-side session revocation.
-    // The client must always clear its own stored tokens regardless of outcome.
-    try {
-      await this.supabase.db.auth.admin.deleteUser(userId);
-    } catch {
-      // Non-critical — JWT is stateless and expires on its own.
-    }
+  async logout(_userId: string) {
+    // Supabase JWTs are stateless and expire on their own.
+    // The client is responsible for clearing its stored tokens on sign-out.
   }
 
   async forgotPassword(email: string) {
